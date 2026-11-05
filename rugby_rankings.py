@@ -123,6 +123,15 @@ def _clean_team_columns(df: pd.DataFrame) -> pd.DataFrame:
                 df[id_col] = df[nm_col].map(_norm_id_from_name)
             else:
                 raise ValueError(f"Missing both {id_col} and {nm_col}")
+    # Normalize known legacy workbook spellings to the canonical team_id values in teams_meta.csv.
+    id_aliases = {
+        "two blues_prem": "two_blues_prem",
+        "ardmoremarist_prem": "ardmore_marist_prem",
+    }
+    for side in ("home", "away"):
+        id_col = f"{side}_team_id"
+        if id_col in df.columns:
+            df[id_col] = df[id_col].map(lambda value: id_aliases.get(str(value).strip().lower(), str(value).strip()))
     return df
 
 def load_matches_any(base_dir):
@@ -187,14 +196,24 @@ def update_match(rh, ra, hs, as_, stage, neutral):
 def stage_from_row(row):
     return "final" if str(row.get("is_grand_final","")).strip().upper()=="TRUE" else "regular"
 
-def compute_team_names(matches):
-    home = matches[["home_team_id","home_team_name"]].rename(columns={"home_team_id":"team_id","home_team_name":"team_name"}) if "home_team_name" in matches.columns else matches[["home_team_id"]].assign(team_name=lambda x: x["home_team_id"])
-    away = matches[["away_team_id","away_team_name"]].rename(columns={"away_team_id":"team_id","away_team_name":"team_name"}) if "away_team_name" in matches.columns else matches[["away_team_id"]].assign(team_name=lambda x: x["away_team_id"])
-    both = pd.concat([home, away], ignore_index=True)
+def compute_team_names(matches, teams_meta=None):
+    """Display names come from teams_meta.csv, joined only by stable team_id.
+    Match workbook name columns are intentionally not authoritative.
+    """
     names = {}
-    for tid, g in both.groupby("team_id", dropna=True):
-        s = g["team_name"].dropna().astype(str).map(_norm_name)
-        names[tid] = s.value_counts().idxmax() if not s.empty else tid
+    if teams_meta is not None and not teams_meta.empty and {"team_id", "team_name"}.issubset(teams_meta.columns):
+        for _, row in teams_meta.iterrows():
+            tid = str(row.get("team_id", "")).strip()
+            name = _norm_name(str(row.get("team_name", "")))
+            if tid and name:
+                names[tid] = name
+    # Fallback only for IDs not yet present in metadata; never overwrite metadata names.
+    for col_id, col_name in (("home_team_id", "home_team_name"), ("away_team_id", "away_team_name")):
+        if col_id in matches.columns:
+            for _, row in matches[[col_id] + ([col_name] if col_name in matches.columns else [])].drop_duplicates().iterrows():
+                tid = str(row[col_id]).strip()
+                if tid and tid not in names:
+                    names[tid] = _norm_name(str(row.get(col_name, tid))) if col_name in row else tid
     return names
 
 def seasons_sorted(vals):
@@ -261,30 +280,26 @@ def _result_for(team_side: str, hs: int, as_: int) -> str:
     return "L"
 
 def compute_latest_season_stats(matches: pd.DataFrame) -> pd.DataFrame:
+    """Latest-season P/W/D/L and form per stable team_id, independent of display labels/location."""
     df = matches.copy()
     df["parsed_date"] = df["date_utc"].apply(parse_local_date)
-    for c in ["home_score","away_score"]:
+    for c in ["home_score", "away_score"]:
         df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0).astype(int)
-
     rows = []
-    for league, dfL in df.groupby("league_id"):
-        seasons = seasons_sorted(dfL["season"].unique())
-        if not seasons:
-            continue
-        latest = seasons[-1]
-        d = dfL[dfL["season"].astype(str) == latest].sort_values("parsed_date")
-
-        res: Dict[str, List[str]] = {}
-        for _, r in d.iterrows():
+    all_ids = pd.unique(pd.concat([df["home_team_id"], df["away_team_id"]], ignore_index=True))
+    for tid in all_ids:
+        subset = df[(df["home_team_id"] == tid) | (df["away_team_id"] == tid)].copy()
+        seasons = seasons_sorted(subset["season"].unique()) if "season" in subset.columns else []
+        if seasons:
+            subset = subset[subset["season"].astype(str) == seasons[-1]]
+        subset = subset.sort_values("parsed_date")
+        seq = []
+        for _, r in subset.iterrows():
             hs, as_ = int(r["home_score"]), int(r["away_score"])
-            h, a   = r["home_team_id"], r["away_team_id"]
-            res.setdefault(h, []).append(_result_for("home", hs, as_))
-            res.setdefault(a, []).append(_result_for("away", hs, as_))
-
-        for t, seq in res.items():
-            P = len(seq); W = seq.count("W"); D = seq.count("D"); L = seq.count("L")
-            last5 = "".join(seq[-5:]) if seq else ""
-            rows.append({"league_id": league, "team_id": t, "P": P, "W": W, "D": D, "L": L, "form": last5})
+            side = "home" if r["home_team_id"] == tid else "away"
+            seq.append(_result_for(side, hs, as_))
+        P = len(seq); W = seq.count("W"); D = seq.count("D"); L = seq.count("L")
+        rows.append({"team_id": tid, "P": P, "W": W, "D": D, "L": L, "form": "".join(seq[-5:])})
     return pd.DataFrame(rows)
 
 def form_boxes(form_str: str) -> str:
@@ -306,28 +321,29 @@ def form_boxes(form_str: str) -> str:
 
 # ----------------------- MERGE NAMES/LOGOS/COLOURS -----------------------
 def add_team_fields(df, name_map, teams_meta):
+    """Attach authoritative club metadata by team_id; do not join on names or location.
+    league_id on this intermediate frame remains the match competition for Elo strength.
+    team_league_id is the metadata-controlled competition label used for display.
+    """
     out = df.copy()
-    out["team_name"] = out["team_id"].map(name_map).map(_norm_name)
-    out["logo"] = ""
-    out["primary_color"] = ""
-    out["text_color"] = ""
+    out["team_name"] = out["team_id"].map(name_map).fillna(out["team_id"]).map(_norm_name)
+    for col in ["logo", "primary_color", "text_color", "city", "country", "stadium", "website", "instagram", "facebook", "x", "youtube"]:
+        out[col] = ""
+    out["team_league_id"] = out.get("league_id", "")
     if not teams_meta.empty and "team_id" in teams_meta.columns:
-        meta = teams_meta.set_index("team_id")
-
-        def pick_name(row):
-            tid = row["team_id"]
-            if tid in meta.index:
-                nm = str(meta.loc[tid].get("team_name", "")).strip()
-                if nm: return _norm_name(nm)
-            return row["team_name"]
-
-        out["team_name"] = out.apply(pick_name, axis=1)
-        if "logo" in meta.columns:
-            out["logo"] = out["team_id"].map(meta["logo"]).fillna("")
-        if "primary_color" in meta.columns:
-            out["primary_color"] = out["team_id"].map(meta["primary_color"]).fillna("")
-        if "text_color" in meta.columns:
-            out["text_color"] = out["team_id"].map(meta["text_color"]).fillna("")
+        meta = teams_meta.copy()
+        meta["team_id"] = meta["team_id"].astype(str).str.strip()
+        meta = meta.drop_duplicates(subset=["team_id"], keep="last").set_index("team_id")
+        for col in ["team_name", "logo", "primary_color", "text_color", "city", "country", "stadium", "website", "instagram", "facebook", "x", "youtube"]:
+            if col in meta.columns:
+                mapped = out["team_id"].map(meta[col]).fillna("").astype(str).map(_norm_name)
+                if col == "team_name":
+                    out["team_name"] = mapped.where(mapped.ne(""), out["team_id"].astype(str))
+                else:
+                    out[col] = mapped
+        if "league_id" in meta.columns:
+            mapped_league = out["team_id"].map(meta["league_id"]).fillna("").astype(str).map(_norm_name)
+            out["team_league_id"] = mapped_league.where(mapped_league.ne(""), out["team_league_id"])
     return out
 
 # ----------------------- HTML (GLOBAL) -----------------------
@@ -778,7 +794,7 @@ def run_pipeline(base_dir):
 
     teams_meta = load_teams_meta(base_dir)
 
-    names = compute_team_names(matches)
+    names = compute_team_names(matches, teams_meta)
     league_ratings = compute_league_elos_by_season(matches)
 
     league_with_names = add_team_fields(league_ratings, names, teams_meta)
@@ -786,8 +802,15 @@ def run_pipeline(base_dir):
     global_with_names = add_team_fields(global_table, names, teams_meta)
 
     stats_df = compute_latest_season_stats(matches)
-    league_with_names = league_with_names.merge(stats_df, on=["league_id","team_id"], how="left")
-    global_with_names = global_with_names.merge(stats_df, on=["league_id","team_id"], how="left")
+    league_with_names = league_with_names.merge(stats_df, on="team_id", how="left")
+    global_with_names = global_with_names.merge(stats_df, on="team_id", how="left")
+
+    # Display competition is authoritative in teams_meta.csv; match league_id remains used
+    # internally for Elo strength calculations only.
+    for _df in (league_with_names, global_with_names):
+        if "team_league_id" in _df.columns:
+            _df["league_id"] = _df["team_league_id"].where(_df["team_league_id"].astype(str).str.strip().ne(""), _df["league_id"])
+            _df.drop(columns=["team_league_id"], inplace=True)
 
     global_with_names = global_with_names.sort_values("global_rating", ascending=False)\
                                          .drop_duplicates(subset=["team_id"], keep="first")

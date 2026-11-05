@@ -1,37 +1,21 @@
-# XV Nation website release — logo mapping fixed
+# XV Nation — team metadata source-of-truth patch
 
-This release preserves the existing Elo engine, match history, team data, competition pages and club profiles.
+This patch makes `teams_meta.csv` the authoritative source for club-facing identity and profile information.
 
-## Logo audit
-- 66 club records are included.
-- 68 PNG files are included in `assets/logos/` (66 mapped club badges plus supplied/alternate archive artwork).
-- All 66 clubs have a badge mapped to their record and profile.
-- Manukau Rovers and Weymouth badges supplied by the user are included and connected.
-- Four legacy filename aliases in the uploaded metadata were reconciled to the actual archive filenames: Auckland University → `uoa.png`, Hunter Wildfires → `wildfires.png`, Marist → `marist.png`, and University of Canterbury → `uoc.png`.
-- The four filename aliases reconciled against the supplied image archive are Auckland University → `uoa.png`, Hunter Wildfires → `wildfires.png`, Marist → `marist.png`, and University of Canterbury → `uoc.png`.
+## Data contract
+- `teams_meta.csv`: `team_id`, `team_name`, `league_id`, `logo`, `city`, `country`, `stadium`, `website`, `instagram`, `facebook`, `x`, `youtube`. These fields control all club labels and profile details.
+- `matches.xlsx` / `data/matches.json`: match facts only. `home_team_id` and `away_team_id` connect each fixture to the club metadata. The workbook's `home_team_name`, `away_team_name`, `city`, and `country` are not used as club display labels. Fixture `league_id` remains the historical competition for the match itself.
+- `data/teams.json`: rankings, Elo, played/won/drawn/lost, form, rank and Elo history. It is joined to metadata by `team_id`; its old name/location/competition/logo labels are not authoritative.
 
-## What is fixed
-- `data/teams.json` now carries the verified logo paths used by all site views.
-- `assets/rankings.js` is the active rankings script and renders the logo mapping from team data.
-- `clubs.html` and the homepage leaderboard render from the same team data.
-- All 66 club profile pages have their matching badge inserted where a verified image exists.
-- All 66 club records are connected to a valid logo file; Manukau and Weymouth use the newly supplied images.
+## Match ID reconciliation found in the supplied workbook
+The workbook has two legacy spellings normalized by the updated Elo engine: `two blues_prem` → `two_blues_prem`, and `ardmoremarist_prem` → `ardmore_marist_prem`. It also contains 2025 Papatoetoe fixtures, but Papatoetoe is not one of the current 66 ranked teams. `teams_meta_historical_additions.csv` contains a metadata row for Papatoetoe. Append that row to your live `teams_meta.csv` if you want historical results to show the official `Papatoetoe` label rather than the raw team ID. This does not add Papatoetoe to the ranked directory because it is not in `data/teams.json`.
 
-## Deploy
-Upload the contents of this ZIP to the root of the existing GitHub Pages repository, preserving the folder structure, and commit to the branch configured for GitHub Pages. Do not upload the ZIP itself as the site root.
+## Install
+Copy the contents of this patch into the root of the existing GitHub Pages repository, preserving paths and replacing matching files. Do **not** replace your live `teams_meta.csv` with an older copy. Keep the latest edited CSV at the repository root.
 
-The Elo calculation source `rugby_rankings.py`, match workbook `matches.xlsx`, `data/matches.json`, team metadata and CSV ranking exports are included unchanged except for the logo-path reconciliation in `teams_meta.csv`.
+Replace `rugby_rankings.py` in the repository/automation source with this version if you use the Python engine to regenerate rankings.
 
-## Club profile metadata and social links (v2)
+After commit, allow GitHub Pages to deploy and hard-refresh the browser (Ctrl+F5).
 
-All 66 club profile pages now use the shared `assets/profile.js` renderer. It loads `data/teams.json` for rankings, Elo history and match records, then overlays club details from `teams_meta.csv` by `team_id`. To add or update a club's official links, edit the matching row in `teams_meta.csv` and fill any of: `website`, `instagram`, `facebook`, `x`, `youtube`. Use full URLs (including `https://`) where possible. Only populated, valid HTTP(S) URLs are displayed; blank fields are hidden. The website is also shown in Club information.
-
-The homepage and global rankings now use the same recent-form dot treatment: green for wins, red for losses and gold for draws. The homepage retains the Recent form column, but renders dots instead of the W/L/D letter string.
-
-### Important publishing note
-
-Upload/extract the **entire contents** of this ZIP into the published site root, preserving the folder structure. In particular, do not omit `assets/logos/`, `assets/profile.js`, `assets/site.css`, `data/teams.json`, or `teams_meta.csv`. Club profile pages are in `clubs/` and load their badge files from `../assets/logos/`. If deploying with GitHub Actions, ensure the workflow publishes the whole site directory rather than only the HTML files.
-
-
-## Final badge update
-The uploaded `teams_meta.csv` has been integrated. The logo paths for all 66 clubs resolve to PNG files in `assets/logos/`. The same metadata is reflected in `data/teams.json` for the homepage, rankings and club directory, while club profiles continue to read the CSV for club information and social links.
+## Important
+Never change `team_id` when renaming a club or changing its city. A rename/location change is safe because every match joins through `team_id`, not club name or city. If a club moves competitions, change its `league_id` in metadata; the match workbook retains each fixture's actual competition.
