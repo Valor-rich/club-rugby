@@ -1,67 +1,67 @@
-team_id,club,logo_path,status
-brothersbrisbane_prem,Brothers,assets/logos/brothers.png,verified uploaded image
-eastern_suburbs_prem,Eastern Suburbs,assets/logos/eastern_suburbs.png,verified uploaded image
-marist_albion_prem,Marist Albion,assets/logos/marist_albion.png,verified uploaded image
-tuggeranong_prem,Tuggeranong Vikings,assets/logos/tuggeranong.png,verified uploaded image
-auckland_university_prem,Auckland University,assets/logos/uoa.png,verified uploaded image
-ponsonby_prem,Ponsonby,assets/logos/ponsonby.png,verified uploaded image
-kaikorai_prem,Kaikorai Demons,assets/logos/kaikorai.png,verified uploaded image
-linwood_prem,Linwood Bulls,assets/logos/linwood.png,verified uploaded image
-warringah_prem,Warringah Rats,assets/logos/warringah.png,verified uploaded image
-ardmore_marist_prem,Ardmore Marist,assets/logos/ardmoremarist.png,verified uploaded image
-karaka_prem,Karaka,assets/logos/karaka.png,verified uploaded image
-pukekohe_prem,Pukekohe,assets/logos/pukekohe.png,verified uploaded image
-marist_prem,Marist,assets/logos/marist.png,verified uploaded image
-gordon_prem,Gordon,assets/logos/gordon.png,verified uploaded image
-westbrisbane_prem,Wests Bulldogs,assets/logos/west_brisbane.png,verified uploaded image
-dunedin_prem,Dunedin Sharks,assets/logos/dunedin.png,verified uploaded image
-patumahoe_prem,Patumahoe,assets/logos/patumahoe.png,verified uploaded image
-university of canterbury_prem,University of Canterbury,assets/logos/uoc.png,verified uploaded image
-taieri_prem,Taieri Eels,assets/logos/taieri.png,verified uploaded image
-lincoln_university_prem,Lincoln University,assets/logos/lincoln_university.png,verified uploaded image
-grammar_tec_prem,Grammar TEC,assets/logos/grammar_tec.png,verified uploaded image
-sydney_university_prem,Sydney University,assets/logos/sydney_university.png,verified uploaded image
-high school old boys_prem,HSOB Polar Bears,assets/logos/hsob.png,verified uploaded image
-southernrfc_prem,Southern Magpies,assets/logos/southern.png,verified uploaded image
-canberra_royals_prem,Canberra Royals,assets/logos/canberra_royals.png,verified uploaded image
-northern_suburbs_prem,Northern Suburbs,assets/logos/northern_suburbs.png,verified uploaded image
-harbourhawks_prem,Harbour Hawks,assets/logos/harbourhawks.png,verified uploaded image
-randwick_prem,Randwick,assets/logos/randwick.png,verified uploaded image
-college_rifles_prem,College Rifles,assets/logos/college_rifles.png,verified uploaded image
-ourfc_prem,Otago University,assets/logos/ourfc.png,verified uploaded image
-new_brighton_prem,New Brighton,assets/logos/new_brighton.png,verified uploaded image
-bonduniversity_prem,Bond University,assets/logos/bond_university.png,verified uploaded image
-eastbrisbane_prem,Easts Tigers,assets/logos/east_brisbane.png,verified uploaded image
-queanbeyan_prem,Queanbeyan Whites,assets/logos/queanbeyan.png,verified uploaded image
-uqrfc_prem,University of Queensland,assets/logos/uqrfc.png,verified uploaded image
-northbrisbane_prem,Norths Eagles,assets/logos/north_brisbane.png,verified uploaded image
-burnside_prem,Burnside,assets/logos/burnside.png,verified uploaded image
-eastwood_prem,Eastwood,assets/logos/eastwood.png,verified uploaded image
-southbrisbane_prem,Souths Magpies,assets/logos/south_brisbane.png,verified uploaded image
-manurewa_prem,Manurewa,assets/logos/manurewa.png,verified uploaded image
-uni_north_prem,Uni-North Owls,assets/logos/uni_north_owls.png,verified uploaded image
-gungahlin_prem,Gungahlin Eagles,assets/logos/gungahlin_eagles.png,verified uploaded image
-green_island_prem,Green Island Grizzlies,assets/logos/greenisland.png,verified uploaded image
-pakuranga_united_prem,Pakuranga United,assets/logos/pakuranga.png,verified uploaded image
-manly_prem,Manly,assets/logos/manly.png,verified uploaded image
-sydenham_prem,Sydenham,assets/logos/sydenham.png,verified uploaded image
-sumner_prem,Sumner,assets/logos/sumner.png,verified uploaded image
-two_blues_prem,Two Blues,assets/logos/twoblues.png,verified uploaded image
-eden_prem,Eden,assets/logos/eden.png,verified uploaded image
-bombay_prem,Bombay,assets/logos/bombay.png,verified uploaded image
-suburbs_prem,Suburbs,assets/logos/suburbs.png,verified uploaded image
-wildfires_prem,Hunter Wildfires,assets/logos/wildfires.png,verified uploaded image
-belfast_prem,Belfast,assets/logos/belfast.png,verified uploaded image
-christchurch_prem,Christchurch,assets/logos/christchurch.png,verified uploaded image
-papakura_prem,Papakura,assets/logos/papakura.png,verified uploaded image
-westharbour_prem,West Harbour,assets/logos/west_harbour.png,verified uploaded image
-manukau_prem,Manukau,,no matching uploaded image; initials fallback
-gps_prem,GPS Gallopers,assets/logos/gps.png,verified uploaded image
-waitemata_prem,Waitemata,assets/logos/waitemata.png,verified uploaded image
-weymouth_prem,Weymouth,,no matching uploaded image; initials fallback
-sunnybank_prem,Sunnybank Dragons,assets/logos/sunnybank.png,verified uploaded image
-alhambra_prem,Alhambra Union Broncos,assets/logos/alhambra.png,verified uploaded image
-western_districts_prem,Western Districts Lions,assets/logos/western_district.png,verified uploaded image
-zingari_prem,Zingari Richmond Dragons,assets/logos/zingari.png,verified uploaded image
-southern_districts_prem,Southern Districts,assets/logos/southern_districts.png,verified uploaded image
-shirley_prem,Shirley,assets/logos/shirley.png,verified uploaded image
+team_id,team_name,logo_path,asset_exists,homepage_and_rankings_data_path,profile_page
+alhambra_prem,Alhambra Union Broncos,assets/logos/alhambra.png,True,assets/logos/alhambra.png,clubs/alhambra-union-broncos.html
+ardmore_marist_prem,Ardmore Marist,assets/logos/ardmoremarist.png,True,assets/logos/ardmoremarist.png,clubs/ardmore-marist.html
+auckland_university_prem,Auckland University,assets/logos/uoa.png,True,assets/logos/uoa.png,clubs/auckland-university.html
+belfast_prem,Belfast,assets/logos/belfast.png,True,assets/logos/belfast.png,clubs/belfast.html
+bombay_prem,Bombay,assets/logos/bombay.png,True,assets/logos/bombay.png,clubs/bombay.html
+bonduniversity_prem,Bond University,assets/logos/bond_university.png,True,assets/logos/bond_university.png,clubs/bond-university.html
+brothersbrisbane_prem,Brothers,assets/logos/brothers.png,True,assets/logos/brothers.png,clubs/brothers.html
+burnside_prem,Burnside,assets/logos/burnside.png,True,assets/logos/burnside.png,clubs/burnside.html
+canberra_royals_prem,Canberra Royals,assets/logos/canberra_royals.png,True,assets/logos/canberra_royals.png,clubs/canberra-royals.html
+christchurch_prem,Christchurch,assets/logos/christchurch.png,True,assets/logos/christchurch.png,clubs/christchurch.html
+college_rifles_prem,College Rifles,assets/logos/college_rifles.png,True,assets/logos/college_rifles.png,clubs/college-rifles.html
+dunedin_prem,Dunedin Sharks,assets/logos/dunedin.png,True,assets/logos/dunedin.png,clubs/dunedin-sharks.html
+eastern_suburbs_prem,Eastern Suburbs,assets/logos/eastern_suburbs.png,True,assets/logos/eastern_suburbs.png,clubs/eastern-suburbs.html
+eastbrisbane_prem,Easts Tigers,assets/logos/east_brisbane.png,True,assets/logos/east_brisbane.png,clubs/easts-tigers.html
+eastwood_prem,Eastwood,assets/logos/eastwood.png,True,assets/logos/eastwood.png,clubs/eastwood.html
+eden_prem,Eden,assets/logos/eden.png,True,assets/logos/eden.png,clubs/eden.html
+gordon_prem,Gordon,assets/logos/gordon.png,True,assets/logos/gordon.png,clubs/gordon.html
+gps_prem,GPS Gallopers,assets/logos/gps.png,True,assets/logos/gps.png,clubs/gps-gallopers.html
+grammar_tec_prem,Grammar TEC,assets/logos/grammar_tec.png,True,assets/logos/grammar_tec.png,clubs/grammar-tec.html
+green_island_prem,Green Island Grizzlies,assets/logos/greenisland.png,True,assets/logos/greenisland.png,clubs/green-island-grizzlies.html
+gungahlin_prem,Gungahlin Eagles,assets/logos/gungahlin_eagles.png,True,assets/logos/gungahlin_eagles.png,clubs/gungahlin-eagles.html
+harbourhawks_prem,Harbour Hawks,assets/logos/harbourhawks.png,True,assets/logos/harbourhawks.png,clubs/harbour-hawks.html
+high school old boys_prem,HSOB Polar Bears,assets/logos/hsob.png,True,assets/logos/hsob.png,clubs/hsob-polar-bears.html
+wildfires_prem,Hunter Wildfires,assets/logos/wildfires.png,True,assets/logos/wildfires.png,clubs/hunter-wildfires.html
+kaikorai_prem,Kaikorai Demons,assets/logos/kaikorai.png,True,assets/logos/kaikorai.png,clubs/kaikorai-demons.html
+karaka_prem,Karaka,assets/logos/karaka.png,True,assets/logos/karaka.png,clubs/karaka.html
+lincoln_university_prem,Lincoln University,assets/logos/lincoln_university.png,True,assets/logos/lincoln_university.png,clubs/lincoln-university.html
+linwood_prem,Linwood Bulls,assets/logos/linwood.png,True,assets/logos/linwood.png,clubs/linwood-bulls.html
+manly_prem,Manly,assets/logos/manly.png,True,assets/logos/manly.png,clubs/manly.html
+manukau_prem,Manukau,assets/logos/manukau_rovers.png,True,assets/logos/manukau_rovers.png,clubs/manukau.html
+manurewa_prem,Manurewa,assets/logos/manurewa.png,True,assets/logos/manurewa.png,clubs/manurewa.html
+marist_prem,Marist,assets/logos/marist.png,True,assets/logos/marist.png,clubs/marist.html
+marist_albion_prem,Marist Albion,assets/logos/marist_albion.png,True,assets/logos/marist_albion.png,clubs/marist-albion.html
+new_brighton_prem,New Brighton,assets/logos/new_brighton.png,True,assets/logos/new_brighton.png,clubs/new-brighton.html
+northern_suburbs_prem,Northern Suburbs,assets/logos/northern_suburbs.png,True,assets/logos/northern_suburbs.png,clubs/northern-suburbs.html
+northbrisbane_prem,Norths Eagles,assets/logos/north_brisbane.png,True,assets/logos/north_brisbane.png,clubs/norths-eagles.html
+ourfc_prem,Otago University,assets/logos/ourfc.png,True,assets/logos/ourfc.png,clubs/otago-university.html
+pakuranga_united_prem,Pakuranga United,assets/logos/pakuranga.png,True,assets/logos/pakuranga.png,clubs/pakuranga-united.html
+papakura_prem,Papakura,assets/logos/papakura.png,True,assets/logos/papakura.png,clubs/papakura.html
+patumahoe_prem,Patumahoe,assets/logos/patumahoe.png,True,assets/logos/patumahoe.png,clubs/patumahoe.html
+ponsonby_prem,Ponsonby,assets/logos/ponsonby.png,True,assets/logos/ponsonby.png,clubs/ponsonby.html
+pukekohe_prem,Pukekohe,assets/logos/pukekohe.png,True,assets/logos/pukekohe.png,clubs/pukekohe.html
+queanbeyan_prem,Queanbeyan Whites,assets/logos/queanbeyan.png,True,assets/logos/queanbeyan.png,clubs/queanbeyan-whites.html
+randwick_prem,Randwick,assets/logos/randwick.png,True,assets/logos/randwick.png,clubs/randwick.html
+shirley_prem,Shirley,assets/logos/shirley.png,True,assets/logos/shirley.png,clubs/shirley.html
+southern_districts_prem,Southern Districts,assets/logos/southern_districts.png,True,assets/logos/southern_districts.png,clubs/southern-districts.html
+southernrfc_prem,Southern Magpies,assets/logos/southern.png,True,assets/logos/southern.png,clubs/southern-magpies.html
+southbrisbane_prem,Souths Magpies,assets/logos/south_brisbane.png,True,assets/logos/south_brisbane.png,clubs/souths-magpies.html
+suburbs_prem,Suburbs,assets/logos/suburbs.png,True,assets/logos/suburbs.png,clubs/suburbs.html
+sumner_prem,Sumner,assets/logos/sumner.png,True,assets/logos/sumner.png,clubs/sumner.html
+sunnybank_prem,Sunnybank Dragons,assets/logos/sunnybank.png,True,assets/logos/sunnybank.png,clubs/sunnybank-dragons.html
+sydenham_prem,Sydenham,assets/logos/sydenham.png,True,assets/logos/sydenham.png,clubs/sydenham.html
+sydney_university_prem,Sydney University,assets/logos/sydney_university.png,True,assets/logos/sydney_university.png,clubs/sydney-university.html
+taieri_prem,Taieri Eels,assets/logos/taieri.png,True,assets/logos/taieri.png,clubs/taieri-eels.html
+tuggeranong_prem,Tuggeranong Vikings,assets/logos/tuggeranong.png,True,assets/logos/tuggeranong.png,clubs/tuggeranong-vikings.html
+two_blues_prem,Two Blues,assets/logos/twoblues.png,True,assets/logos/twoblues.png,clubs/two-blues.html
+uni_north_prem,Uni-North Owls,assets/logos/uni_north_owls.png,True,assets/logos/uni_north_owls.png,clubs/uni-north-owls.html
+university of canterbury_prem,University of Canterbury,assets/logos/uoc.png,True,assets/logos/uoc.png,clubs/university-of-canterbury.html
+uqrfc_prem,University of Queensland,assets/logos/uqrfc.png,True,assets/logos/uqrfc.png,clubs/university-of-queensland.html
+waitemata_prem,Waitemata,assets/logos/waitemata.png,True,assets/logos/waitemata.png,clubs/waitemata.html
+warringah_prem,Warringah Rats,assets/logos/warringah.png,True,assets/logos/warringah.png,clubs/warringah-rats.html
+westharbour_prem,West Harbour,assets/logos/west_harbour.png,True,assets/logos/west_harbour.png,clubs/west-harbour.html
+western_districts_prem,Western Districts Lions,assets/logos/western_district.png,True,assets/logos/western_district.png,clubs/western-districts-lions.html
+westbrisbane_prem,Wests Bulldogs,assets/logos/west_brisbane.png,True,assets/logos/west_brisbane.png,clubs/wests-bulldogs.html
+weymouth_prem,Weymouth,assets/logos/weymouth.png,True,assets/logos/weymouth.png,clubs/weymouth.html
+zingari_prem,Zingari Richmond Dragons,assets/logos/zingari.png,True,assets/logos/zingari.png,clubs/zingari-richmond-dragons.html
