@@ -22,3 +22,8 @@ The club profile graph replays match-by-match Elo chronologically from the suppl
 
 ## Hosting
 This is a static GitHub Pages site. It does not yet include an automated data rebuild workflow. Upload new versions of the generated files to publish updates.
+
+
+## Club logo mapping update
+
+The supplied `assets.zip` logo library has been added under `assets/logos/`. The 64 club badges with clear filename-to-club matches are now connected across the rankings, club directory, homepage and individual profiles. Manukau and Weymouth remain on the initials fallback because no unambiguous matching badge was identifiable. `gordon.png` and `papatoetoe.png` are retained in the asset library but are not assigned to a ranked club.
