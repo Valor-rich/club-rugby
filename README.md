@@ -1,29 +1,22 @@
-# XV Nation website refresh
+# XV Nation website release — logo mapping fixed
 
-## Upload
-Upload the **contents** of this folder into the root of the existing `club-rugby` GitHub repository.
+This release preserves the existing Elo engine, match history, team data, competition pages and club profiles.
 
-Included:
-- `index.html`, `rankings.html`, `competitions.html`, `results.html`, `clubs.html`, `news.html`
-- `clubs/` — 66 individual club profile pages
-- `leagues/` — seven competition pages
-- `assets/` — XVN master logo, stylesheet, ranking interactions and verified supplied club badges
-- `data/teams.json` and `data/matches.json`
-- `teams_meta.csv`, `global_rankings.csv`, `league_team_ratings.csv`
+## Logo audit
+- 66 club records are included.
+- 66 club logo files are included in `assets/logos/`.
+- 64 clubs have a verified badge mapped to their record and profile.
+- Manukau and Weymouth remain initials-only because no matching image for either club was present in the uploaded logo archive.
+- The four filename aliases reconciled against the supplied image archive are Auckland University → `uoa.png`, Hunter Wildfires → `wildfires.png`, Marist → `marist.png`, and University of Canterbury → `uoc.png`.
 
-## Club data notes
-- City and country come from the current rankings dataset.
-- Stadium is the most frequently recorded home venue in the supplied `matches.xlsx`; it should be checked with each club before being described as its official home ground.
-- Official websites and social URLs are intentionally blank until verified.
-- Club badges are only assigned where a supplied image has a clear matching club. Other clubs use initials placeholders.
+## What is fixed
+- `data/teams.json` now carries the verified logo paths used by all site views.
+- `assets/rankings.js` is the active rankings script and renders the logo mapping from team data.
+- `clubs.html` and the homepage leaderboard render from the same team data.
+- All 66 club profile pages have their matching badge inserted where a verified image exists.
+- All 66 club PNG files from the uploaded archive are included.
 
-## Elo history notes
-The club profile graph replays match-by-match Elo chronologically from the supplied match workbook using the update formula and constants in `rugby_rankings.py` (1500 starting rating, 50-point home advantage, K=20 regular / 35 grand final, capped log margin multiplier 1.8). It is explicitly labelled **replayed match Elo**. It is not the transformed global Elo rating in `global_rankings.csv`.
+## Deploy
+Upload the contents of this ZIP to the root of the existing GitHub Pages repository, preserving the folder structure, and commit to the branch configured for GitHub Pages. Do not upload the ZIP itself as the site root.
 
-## Hosting
-This is a static GitHub Pages site. It does not yet include an automated data rebuild workflow. Upload new versions of the generated files to publish updates.
-
-
-## Club logo mapping update
-
-The supplied `assets.zip` logo library has been added under `assets/logos/`. The 64 club badges with clear filename-to-club matches are now connected across the rankings, club directory, homepage and individual profiles. Manukau and Weymouth remain on the initials fallback because no unambiguous matching badge was identifiable. `gordon.png` and `papatoetoe.png` are retained in the asset library but are not assigned to a ranked club.
+The Elo calculation source `rugby_rankings.py`, match workbook `matches.xlsx`, `data/matches.json`, team metadata and CSV ranking exports are included unchanged except for the logo-path reconciliation in `teams_meta.csv`.
