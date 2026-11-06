@@ -4,3 +4,21 @@
 
 /* XVN profile and recent-form refinements */
 .form{display:inline-flex;align-items:center;gap:5px;min-width:48px}.form i{width:9px;height:9px;border-radius:50%;display:inline-block}.socials a{display:inline-flex;align-items:center;gap:5px;background:#f8fbfc}.socials a:hover{border-color:var(--cyan);color:#008eae}.club-hero .badge img{width:100%;height:100%;object-fit:contain;padding:7px}
+
+/* Competition profile pages */
+.competition-card{display:flex;flex-direction:column;gap:8px;min-height:190px}
+.competition-card .competition-location{font-size:12px;color:var(--muted)}
+.competition-card .competition-union{font-size:12px;color:var(--ink);font-weight:700}
+.competition-hero{background:linear-gradient(112deg,#082746,#15516c);color:#fff;border-radius:20px;padding:28px;margin:18px 0}
+.competition-hero h2{font-size:clamp(25px,4vw,36px);line-height:1.12;margin:8px 0}
+.competition-hero p{color:#d3e2ea;max-width:850px;margin:8px 0 0}
+.competition-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0 24px}
+.competition-fact{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px}
+.competition-fact span{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}
+.competition-fact strong{font-size:14px}
+.competition-fact a{color:#008eae;font-weight:800}
+.competition-history{margin:20px 0 26px}
+.competition-history h2{font-size:18px;margin:0 0 10px}
+.competition-history-list{display:flex;flex-wrap:wrap;gap:9px}
+.competition-history-item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-size:12px}
+@media(max-width:600px){.competition-hero{padding:22px}.competition-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
