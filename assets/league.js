@@ -5,7 +5,8 @@ XVN.load('../').then(data=>{
  const body=document.getElementById('leagueRows'),id=body?.dataset.competition;if(!body||!id)return;
  const comp=data.competitionsById.get(id);if(!comp)throw Error('Competition not found in competitions_meta.csv');
  document.title=comp.competition_name+' | XV Nation';
- const heading=document.getElementById('competitionName');if(heading)heading.textContent=comp.competition_name;
+ const heading=document.getElementById('competitionName');
+ if(heading){heading.textContent=comp.competition_name;const logo=String(comp.logo||'').trim().replace(/^\.\//,'').replace(/^\//,'');if(logo){const img=document.createElement('img');img.className='competition-logo-hero';img.src='../'+logo;img.alt=comp.competition_name+' logo';img.onerror=()=>img.remove();heading.parentNode.insertBefore(img,heading);}}
  const description=document.getElementById('competitionDescription');if(description)description.textContent=comp.description||'Competition information will be added soon.';
  const website=safeUrl(comp.website);
  const fields=[['Union',comp.union],['Location',comp.location],['Region',comp.region],['State',comp.state],['Country',comp.country],['Format',comp.format],['Official website',website?'<a href="'+esc(website)+'" target="_blank" rel="noopener noreferrer">Visit website ↗</a>':'']];

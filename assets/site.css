@@ -22,3 +22,10 @@
 .competition-history-list{display:flex;flex-wrap:wrap;gap:9px}
 .competition-history-item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-size:12px}
 @media(max-width:600px){.competition-hero{padding:22px}.competition-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Competition logos */
+.competition-card{display:flex;align-items:center;gap:16px}
+.competition-logo-card{width:76px;height:76px;object-fit:contain;flex:none;padding:5px;background:#f4f7f9;border:1px solid var(--line);border-radius:12px}
+.competition-card-copy{min-width:0;flex:1}
+.competition-logo-hero{display:block;width:88px;height:88px;object-fit:contain;padding:7px;background:#fff;border-radius:16px;margin:0 0 14px}
+@media(max-width:540px){.competition-logo-card{width:58px;height:58px}.competition-logo-hero{width:70px;height:70px}}
