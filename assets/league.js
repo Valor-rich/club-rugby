@@ -5,13 +5,13 @@ const divisionLabel=v=>{const n=String(v||'').replace(/^D/i,'');return n?'Divisi
 XVN.load('../').then(data=>{
  const body=document.getElementById('leagueRows'),id=body?.dataset.competition;if(!body||!id)return;
  const comp=data.competitionsById.get(id);if(!comp)throw Error('Competition not found in competitions_meta.csv');
- document.title=(comp.display_name||comp.competition_name)+' | XV Nation';
+ document.title=comp.competition_name+' | XV Nation';
  const heading=document.getElementById('competitionName');
- if(heading){heading.textContent=comp.competition_name;const logo=String(comp.logo||'').trim().replace(/^\.\//,'').replace(/^\//,'');if(logo){const img=document.createElement('img');img.className='competition-logo-hero';img.src='../'+logo;img.alt=comp.competition_name+' logo';img.onerror=()=>img.remove();heading.parentNode.insertBefore(img,heading);}const conf=heading.parentNode.querySelector('.eyebrow');if(conf)conf.textContent=comp.conference_name||'Regional conference';}
+ if(heading)heading.textContent=comp.competition_name; const conf=heading?.parentNode.querySelector('.eyebrow'); if(conf)conf.textContent=[comp.city,comp.country].filter(Boolean).join(', ');
  const description=document.getElementById('competitionDescription');if(description)description.textContent=comp.description||'Competition information will be added soon.';
  const website=safeUrl(comp.website);
- const fields=[['Union',comp.union],['Location',comp.location||comp.city],['Region',comp.region],['State',comp.state],['Country',comp.country],['Format',comp.format],['Official website',website?'<a href="'+esc(website)+'" target="_blank" rel="noopener noreferrer">Visit website ↗</a>':'']];
- const facts=document.getElementById('competitionFacts');if(facts)facts.innerHTML=fields.filter(([,v])=>String(v||'').trim()).map(([k,v])=>'<div class="competition-fact"><span>'+esc(k)+'</span><strong>'+(k==='Official website'?v:esc(v))+'</strong></div>').join('');
+ const fields=[['Union',comp.union],['City',comp.city],['Region',comp.region],['State',comp.state],['Country',comp.country],['Format',comp.format],['Official website',website?'<a href="'+esc(website)+'" target="_blank" rel="noopener noreferrer">Visit website ↗</a>':'']];
+ const map=document.getElementById('competitionMap');if(map){const query=[comp.city,comp.country].filter(Boolean).join(', ');map.innerHTML='<iframe title="Map of '+esc(query)+'" src="https://www.google.com/maps?q='+encodeURIComponent(query)+'&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>';} const facts=document.getElementById('competitionFacts');if(facts)facts.innerHTML=fields.filter(([,v])=>String(v||'').trim()).map(([k,v])=>'<div class="competition-fact"><span>'+esc(k)+'</span><strong>'+(k==='Official website'?v:esc(v))+'</strong></div>').join('');
  const seasons=[...new Set(data.teamCompetitions.filter(m=>m.competition_id===id).map(m=>String(m.season)))].sort((a,b)=>Number(b)-Number(a));
  const select=document.getElementById('competitionSeason');if(select){select.innerHTML=seasons.map(s=>'<option value="'+esc(s)+'">'+esc(s)+' season</option>').join('');select.value=String(data.currentSeason);}
  const history=document.getElementById('competitionHistory');
