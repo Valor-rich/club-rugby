@@ -34,8 +34,9 @@
       const membership=currentMembershipByTeam.get(key(base.team_id));
       const competition=competitionsById.get(membership?.competition_id);
       return {...base,
-        name:m.team_name || base.name, league:competition?.competition_name || m.league_id,
-        competition_id:membership?.competition_id || '', division:membership?.division || '',
+        name:m.team_name || base.name, league:competition?.display_name || competition?.competition_name || m.league_id,
+        competition_name:competition?.competition_name || '', conference_name:competition?.conference_name || '', display_name:competition?.display_name || competition?.competition_name || '',
+        competition_id:membership?.competition_id || '', division:membership?.division ? `Division ${String(membership.division).replace(/^D/i,'')}` : '', division_code:membership?.division || '',
         logo:m.logo, city:m.city, state:m.state, country:m.country, stadium:m.stadium,
         website:m.website, instagram:m.instagram, facebook:m.facebook, x:m.x, youtube:m.youtube,
         team_id:base.team_id

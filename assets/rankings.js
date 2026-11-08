@@ -7,7 +7,7 @@ XVN.load('').then(({teams})=>{
  const $=id=>document.getElementById(id), league=$('league');
  [...new Set(teams.map(t=>t.league).filter(Boolean))].sort().forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v;league.append(o)});
  function draw(){let q=$('q').value.toLowerCase(),c=$('country').value,l=league.value,s=$('sort').value;
- let a=teams.filter(t=>(!q||[t.name,t.city,t.state,t.country,t.league].join(' ').toLowerCase().includes(q))&&(!c||t.country===c)&&(!l||t.league===l));
+ let a=teams.filter(t=>(!q||[t.name,t.city,t.state,t.country,t.league,t.conference_name].join(' ').toLowerCase().includes(q))&&(!c||t.country===c)&&(!l||t.league===l));
  a.sort((x,y)=>s==='rating'?y.global_rating-x.global_rating:s==='wins'?y.won-x.won:s==='played'?y.played-x.played:x.rank-y.rank);
  $('rankingRows').innerHTML=a.map(t=>`<tr><td class="rank">${t.rank}</td><td><a class="teamcell" href="${profile(t)}">${badge(t)}${esc(t.name)}</a></td><td>${esc(t.league)}</td><td>${esc([t.city,t.state].filter(Boolean).join(', '))}</td><td>${t.played}</td><td>${t.won}</td><td>${t.drawn}</td><td>${t.lost}</td><td>${formDots(t.form)}</td><td><strong>${Number(t.global_rating).toFixed(1)}</strong></td></tr>`).join('');
  $('count').textContent=`Showing ${a.length} of ${teams.length} ranked clubs.`;}
