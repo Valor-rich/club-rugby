@@ -6,7 +6,7 @@ XVN.load('').then(data=>{
   const members=data.teamCompetitions.filter(m=>Number(m.season)===data.currentSeason&&m.competition_id===c.competition_id);
   const ranked=data.teams.filter(t=>t.competition_id===c.competition_id).sort((a,b)=>a.rank-b.rank);
   const leading=ranked[0]?.name||'No ranked club yet';
-  const location=[c.location,c.state,c.country].filter(Boolean).join(' · ');
+  const location=[c.location||c.city,c.state,c.country].filter(Boolean).join(' · ');
   const logo=logoPath(c.logo),conference=c.conference_name||'Regional conference';
   return '<a class="card competition-card" href="leagues/'+encodeURIComponent(c.competition_id)+'.html">'+(logo?'<img class="competition-logo-card" src="'+esc(logo)+'" alt="'+esc(c.competition_name)+' logo" loading="lazy" onerror="this.style.display=\'none\'">':'')+'<div class="competition-card-copy"><div class="eyebrow">'+esc(conference)+'</div><h3>'+esc(c.competition_name)+'</h3><p>'+esc(location)+'</p><p class="competition-union">'+members.length+' clubs · '+data.currentSeason+' season</p><p>Leading club: '+esc(leading)+'</p></div></a>';
  }).join('');
