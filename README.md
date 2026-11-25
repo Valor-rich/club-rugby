@@ -1,4 +1,4 @@
-# XV Nation — team metadata source-of-truth patch
+# WCR — World Club Rugby — team metadata source-of-truth patch
 
 This patch makes `teams_meta.csv` the authoritative source for club-facing identity and profile information.
 

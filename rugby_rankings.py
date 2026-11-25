@@ -385,7 +385,7 @@ def build_html(base_dir, global_df):
 <title>Club Rugby Rankings</title>
 <style>{css}</style>
 <body>
-  <header><div class="brand">🏉 XV Nation — Club Rugby Rankings</div></header>
+  <header><div class="brand">🏉 World Club Rugby — Club Rugby Rankings</div></header>
   <div class="sub">Global combined rankings and per-league tables.</div>
   <table>
     <thead><tr>
@@ -448,7 +448,7 @@ def build_per_league_pages(base_dir: str, league_df: pd.DataFrame):
 <title>{html_escape(lg)} — Club Rugby Rankings</title>
 <style>{css}</style>
 <body>
-  <header><div class="brand">🏉 XV Nation — Club Rugby Rankings</div></header>
+  <header><div class="brand">🏉 World Club Rugby — Club Rugby Rankings</div></header>
   <div class="sub"><a href="../index.html">← Back to homepage</a></div>
   <h1>{html_escape(lg)}</h1>
   <table>
@@ -533,7 +533,7 @@ def build_top20_html(base_dir: str, global_df: pd.DataFrame):
 <style>{css}</style>
 <body>
   <div class="page">
-    <div class="brand">🏉 XV Nation's Top 20</div>
+    <div class="brand">🏉 WCR's Top 20</div>
     <div class="sub">Club Rugby Rankings</div>
     <div class="grid">
       <div>{render_col(left)}</div>
@@ -591,7 +591,7 @@ def build_top25_grid_html(base_dir: str, global_df: pd.DataFrame):
 <body>
   <div class="wrap">
     <div class="banner">
-      <div class="title">🏉 XV Nation — Top 25</div>
+      <div class="title">🏉 World Club Rugby — Top 25</div>
       <div class="meta">{html_escape(now_stamp())}</div>
     </div>
     <div class="grid">{''.join(tiles_html)}</div>
@@ -751,11 +751,11 @@ def build_index(base_dir: str, league_df: pd.DataFrame, global_df: pd.DataFrame)
     """
 
     html_doc = f"""<!doctype html><html><meta charset="utf-8">
-<title>XV Nation — Club Rugby Rankings</title>
+<title>World Club Rugby — Club Rugby Rankings</title>
 <style>{css}</style>
 <body>
   <header>
-    <div class="brand">🏉 XV Nation — Club Rugby Rankings</div>
+    <div class="brand">🏉 World Club Rugby — Club Rugby Rankings</div>
     <div class="stamp">Last updated: {html_escape(now_stamp())}</div>
   </header>
 
