@@ -1,13 +1,5 @@
-# WCR — World Club Rugby
+# WCR approved shield identity
 
-Domain: www.worldclubrugby.com. Primary brand palette: Aqua #00FFFF, turquoise #00D4B3, teal #007F7F, black and white.
+The approved abstract WCR crest is now the public brand mark. It has a solid white shield interior, a thick black inside border and a turquoise outside border. The area outside the shield is transparent. Letterforms have been traced from the approved raster artwork and rendered as SVG paths; the gradient and border curves are reconstructed for clean rendering. The SVG is a close vector interpretation, not a byte-for-byte copy of the PNG.
 
-SVG assets: assets/wcr-mark.svg, assets/wcr-horizontal.svg, assets/wcr-horizontal-dark.svg, assets/wcr-stacked.svg, assets/wcr-social.svg, assets/wcr-social-reversed.svg, assets/wcr-favicon.svg.
-
-This is a vector interpretation of the approved logo concept, not a pixel-exact trace. Review before trademark filing.
-
-## Domain rollout
-
-GitHub Pages: Settings → Pages → Custom domain: www.worldclubrugby.com. GoDaddy DNS: CNAME www → valor-rich.github.io; A records @ → 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153. Preserve email records. Enable Enforce HTTPS once GitHub provisions the certificate.
-
-The site's legacy JS namespace window.XVN is intentionally kept to preserve data compatibility, while the public brand changes to WCR. If generating new pages from rugby_rankings.py, update templates to retain WCR markup.
+All legacy WCR SVG asset names resolve to this new crest to preserve existing links. assets/wcr-shield.svg is the canonical artwork for new uses. Individual club and competition logos are unchanged. The old unused assets/xvn-logo.png is retained for archive compatibility. No ranking, location, DNS or match data changes.
