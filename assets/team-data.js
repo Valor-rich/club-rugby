@@ -38,6 +38,7 @@
         competition_name:competition?.competition_name || '',
         competition_id:membership?.competition_id || '', division:membership?.division ? `Division ${String(membership.division).replace(/^D/i,'')}` : '', division_code:membership?.division || '',
         logo:m.logo, city:m.city, state:m.state, country:m.country, stadium:m.stadium,
+        street_address:m.street_address, suburb:m.suburb, postcode:m.postcode, latitude:m.latitude, longitude:m.longitude, location_source:m.location_source, location_verified:m.location_verified,
         website:m.website, instagram:m.instagram, facebook:m.facebook, x:m.x, youtube:m.youtube,
         team_id:base.team_id
       };
