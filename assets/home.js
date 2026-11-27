@@ -6,8 +6,10 @@ const formDots = value => `<span class="form" role="img" aria-label="Recent form
 
 XVN.load('').then(data=>{
  const teams=data.teams;
+ const ratingStat=document.getElementById('topWcrRating');
+ if(ratingStat && teams.length) ratingStat.textContent=Math.max(...teams.map(t=>Number(t.wcr_rating))).toFixed(1);
  const cg=document.getElementById('homeCompetitionGrid');
  if(cg)cg.innerHTML=data.competitions.slice().sort((a,b)=>String(a.city||'').localeCompare(String(b.city||''))).map(c=>'<a class="card" href="leagues/'+encodeURIComponent(c.competition_id)+'.html"><div class="eyebrow">'+esc([c.city,c.country].filter(Boolean).join(', '))+'</div><h3>'+esc(c.competition_name)+'</h3><p>Competition rankings and club profiles</p></a>').join('');
  const body=document.getElementById('homeRankingRows');if(!body)return;
- body.innerHTML=[...teams].sort((a,b)=>a.rank-b.rank).slice(0,10).map(t=>`<tr><td class="rank">${String(t.rank).padStart(2,'0')}</td><td><a class="teamcell" href="${profile(t)}">${badge(t)}${esc(t.name)}</a></td><td>${esc(t.league)}</td><td>${t.played}</td><td>${t.won}</td><td>${t.drawn}</td><td>${t.lost}</td><td>${formDots(t.form)}</td><td><strong>${Number(t.global_rating).toFixed(1)}</strong></td></tr>`).join('');
+ body.innerHTML=[...teams].sort((a,b)=>a.rank-b.rank).slice(0,10).map(t=>`<tr><td class="rank">${String(t.rank).padStart(2,'0')}</td><td><a class="teamcell" href="${profile(t)}">${badge(t)}${esc(t.name)}</a></td><td>${esc(t.league)}</td><td>${t.played}</td><td>${t.won}</td><td>${t.drawn}</td><td>${t.lost}</td><td>${formDots(t.form)}</td><td><strong>${Number(t.wcr_rating).toFixed(1)}</strong></td></tr>`).join('');
 }).catch(()=>{});

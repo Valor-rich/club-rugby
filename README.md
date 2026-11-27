@@ -1,3 +1,5 @@
+> **Current project reference:** [WCR_PROJECT_CONTEXT.md](WCR_PROJECT_CONTEXT.md) — live GitHub Pages architecture, 0–100 WCR rating methodology, current data sources, and development rules. This README contains older migration notes; consult the central reference first.
+
 # WCR — World Club Rugby — team metadata source-of-truth patch
 
 This patch makes `teams_meta.csv` the authoritative source for club-facing identity and profile information.

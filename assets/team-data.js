@@ -12,6 +12,11 @@
     const headers=rows.shift().map(h=>h.trim().replace(/^\uFEFF/,''));
     return rows.filter(r=>r.some(v=>String(v||'').trim()!=='')).map(r=>Object.fromEntries(headers.map((h,i)=>[h,String(r[i]??'').trim()])));
   }
+  // Fixed public performance scale: 100 is a theoretical ceiling, not awarded to #1.
+  const wcrRating = elo => {
+    const value = Number(elo);
+    return Number.isFinite(value) ? 100 / (1 + Math.pow(10, (1500 - value) / 400)) : null;
+  };
   const aliases = {'two blues_prem':'two_blues_prem','ardmoremarist_prem':'ardmore_marist_prem','queanbeyan_prem':'queanbeyan_prem'};
   const key = id => { const k=String(id ?? '').trim().toLowerCase(); return aliases[k] || k; };
   async function get(url) { const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw new Error(`Could not load ${url} (${r.status})`); return r; }
@@ -33,7 +38,7 @@
       if(!m) throw new Error(`No teams_meta.csv row for team_id ${base.team_id}`);
       const membership=currentMembershipByTeam.get(key(base.team_id));
       const competition=competitionsById.get(membership?.competition_id);
-      return {...base,
+      return {...base, wcr_rating:wcrRating(base.global_rating),
         name:m.team_name || base.name, league:competition?.competition_name || m.league_id,
         competition_name:competition?.competition_name || '',
         competition_id:membership?.competition_id || '', division:membership?.division ? `Division ${String(membership.division).replace(/^D/i,'')}` : '', division_code:membership?.division || '',
@@ -58,5 +63,5 @@
   }
   function currentTeamsForCompetition(data,competitionId){return data.teams.filter(t=>t.competition_id===competitionId).sort((a,b)=>Number(a.rank)-Number(b.rank));}
   function membershipsForCompetition(data,competitionId){return data.teamCompetitions.filter(m=>m.competition_id===competitionId).map(m=>({...m,team_name:data.metaById.get(key(m.team_id))?.team_name || m.team_id}));}
-  window.XVN={load,teamName,matchesForTeam,currentTeamsForCompetition,membershipsForCompetition,escape:esc,key};
+  window.XVN={load,teamName,matchesForTeam,currentTeamsForCompetition,membershipsForCompetition,escape:esc,key,wcrRating};
 })();

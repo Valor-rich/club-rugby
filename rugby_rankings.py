@@ -66,6 +66,10 @@ def parse_local_date(x):
         return None
 
 def expected_score(a, b): return 1.0 / (1.0 + 10 ** (-(a - b) / 400.0))
+
+def elo_to_wcr(elo: float) -> float:
+    """Map underlying Elo monotonically to the WCR 0–100 public scale."""
+    return 100.0 / (1.0 + 10.0 ** ((ELO_CENTER - float(elo)) / 400.0))
 def margin_multiplier(p, cap=MARGIN_CAP): return min(math.log(abs(p)+1.0), cap)
 def k_by_stage(s): return K_FINAL if s=="final" else (K_PLAYOFF if s=="playoff" else K_REGULAR)
 def to_bool(x): return str(x).strip().upper() == "TRUE"
@@ -378,7 +382,7 @@ def build_html(base_dir, global_df):
             f"<td>{int(r.get('D',0))}</td>"
             f"<td>{int(r.get('L',0))}</td>"
             f"<td>{form_html}</td>"
-            f"<td class='rating'>{r['global_rating']:.1f}</td>"
+            f"<td class='rating'>{r['wcr_rating']:.1f}</td>"
             f"</tr>"
         )
     html = f"""<!doctype html><html><meta charset='utf-8'>
@@ -390,7 +394,7 @@ def build_html(base_dir, global_df):
   <table>
     <thead><tr>
       <th>#</th><th>Team</th><th>League</th><th>City</th><th>Country</th>
-      <th>P</th><th>W</th><th>D</th><th>L</th><th>Form</th><th>Rating</th>
+      <th>P</th><th>W</th><th>D</th><th>L</th><th>Form</th><th>WCR rating</th>
     </tr></thead>
     <tbody>{''.join(rows)}</tbody>
   </table>
@@ -441,7 +445,7 @@ def build_per_league_pages(base_dir: str, league_df: pd.DataFrame):
                 f"<td>{int(r.get('D',0))}</td>"
                 f"<td>{int(r.get('L',0))}</td>"
                 f"<td>{form_html}</td>"
-                f"<td class='rating'>{r['league_rating']:.1f}</td>"
+                f"<td class='rating'>{r['wcr_rating']:.1f}</td>"
                 f"</tr>"
             )
         page = f"""<!doctype html><html><meta charset='utf-8'>
@@ -454,7 +458,7 @@ def build_per_league_pages(base_dir: str, league_df: pd.DataFrame):
   <table>
     <thead><tr>
       <th>#</th><th>Team</th><th>League</th><th>City</th><th>Country</th>
-      <th>P</th><th>W</th><th>D</th><th>L</th><th>Form</th><th>Rating</th>
+      <th>P</th><th>W</th><th>D</th><th>L</th><th>Form</th><th>WCR rating</th>
     </tr></thead>
     <tbody>{''.join(rows)}</tbody>
   </table>
@@ -644,7 +648,7 @@ def build_index(base_dir: str, league_df: pd.DataFrame, global_df: pd.DataFrame)
             f"<td>{int(r.get('D',0))}</td>"
             f"<td>{int(r.get('L',0))}</td>"
             f"<td class='formcell'>{form_html}</td>"
-            f"<td class='elo'>{float(r.get('global_rating',0.0)):.1f}</td>"
+            f"<td class='elo'>{float(r.get('wcr_rating',0.0)):.1f}</td>"
             f"</tr>"
         )
 
@@ -770,7 +774,7 @@ def build_index(base_dir: str, league_df: pd.DataFrame, global_df: pd.DataFrame)
     <thead>
       <tr>
         <th>Rk</th><th style="text-align:left">Club</th><th style="text-align:left">League</th>
-        <th>P</th><th>W</th><th>D</th><th>L</th><th>Form</th><th>Elo</th>
+        <th>P</th><th>W</th><th>D</th><th>L</th><th>Form</th><th>WCR rating</th>
       </tr>
     </thead>
     <tbody>
@@ -819,6 +823,11 @@ def run_pipeline(base_dir):
 
     global_with_names = global_with_names.sort_values("global_rating", ascending=False).reset_index(drop=True)
     global_with_names["rank"] = np.arange(1, len(global_with_names)+1)
+
+    # Public WCR rating is a fixed monotonic conversion; underlying Elo remains
+    # authoritative for all calculations and ranking positions.
+    league_with_names["wcr_rating"] = league_with_names["league_rating"].map(elo_to_wcr)
+    global_with_names["wcr_rating"] = global_with_names["global_rating"].map(elo_to_wcr)
 
     league_with_names.to_csv(os.path.join(base_dir, OUT_LEAGUE), index=False)
     global_with_names.to_csv(os.path.join(base_dir, OUT_GLOBAL), index=False)
